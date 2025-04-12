@@ -1,6 +1,6 @@
 import requests
 import csv
-from datetime import datetime
+from datetime import datetime, timedelta
 
 url = "https://api.coingecko.com/api/v3/coins/markets"
 params = {
