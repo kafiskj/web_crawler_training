@@ -19,7 +19,7 @@ for coin in data:
     })
 
 # 抓取時間
-fetch_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+fetch_time = (datetime.utcnow() + timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S")
 
 coins.append({})
 coins.append({"name": f"Data fetched at: {fetch_time}", "symbol": "", "price": ""})
