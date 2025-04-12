@@ -1,7 +1,6 @@
-#This python is get "Bitcoin","Eereumth","Dogecoin" 's price
-#Through API
 import requests
 import csv
+from datetime import datetime
 
 url = "https://api.coingecko.com/api/v3/coins/markets"
 params = {
@@ -18,6 +17,12 @@ for coin in data:
         "symbol": coin["symbol"],
         "price": coin["current_price"]
     })
+
+# 抓取時間
+fetch_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+coins.append({})
+coins.append({"name": f"Data fetched at: {fetch_time}", "symbol": "", "price": ""})
 
 with open("api.csv", "w", newline="", encoding="utf-8") as f:
     writer = csv.DictWriter(f, fieldnames=["name", "symbol", "price"])
