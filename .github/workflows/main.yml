@@ -1,40 +1,42 @@
 name: Spider Workflow
 on:
   schedule:
-    - cron: "0 0 * * *"
-  workflow_dispatch:
+    - cron: "0 0 * * *"  # 每天 00:00 UTC 觸發
+  workflow_dispatch:  # 支援手動觸發
 
 jobs:
   spider_job:
     runs-on: ubuntu-latest
 
     steps:
+      # 檢出儲存庫
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      # 設定 Python 環境
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
           python-version: '3.8'
 
+      # 安裝依賴套件
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run static.py 
+      - name: Check if Git is installed
+        run: git --version
+
+      - name: Run static.py
         run: |
           python static.py
 
-      - name: Run api.py 
+      - name: Run api.py
         run: |
           python api.py
 
-      # 提交爬取結果到 GitHub 儲存庫
-      - name: Commit and push results
+      # 確保有變動再提交
+      - name: Check if there are changes to commit
         run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
-          git add static.csv api.csv
-          git commit -m "Update crawled data"
-          git push
+          git diff --exit-code || echo "Changes detected"
