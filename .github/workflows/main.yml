@@ -37,6 +37,6 @@ jobs:
           python api.py
 
       # 確保有變動再提交
-      - name: Check if there are changes to commit
-        run: |
-          git diff --exit-code || echo "Changes detected"
+      #- name: Check if there are changes to commit
+      #  run: |
+      #    git diff --exit-code || echo "Changes detected"
